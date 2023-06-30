@@ -11,7 +11,8 @@ function isInputEvent(e: any) {
         if (
             (e.ctrlKey && e.code === "Enter") ||
             e.code === "NumpadEnter" ||
-            (e.key === "Enter" && e.target.tagName === "INPUT")
+            (e.key === "Enter" && e.target.tagName === "INPUT") ||
+            e.code === "Escape"
         )
             return false;
         return true;

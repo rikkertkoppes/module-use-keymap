@@ -1,6 +1,5 @@
 import React from "react";
 import { create } from "zustand";
-import { shallow } from "zustand/shallow";
 
 import { KeymapActions, KeymapState, Keymap } from "./types";
 
@@ -36,14 +35,12 @@ export const useKeymap = (
     deps: any[],
     transparent: boolean = true
 ) => {
-    let keymapActions = useKeyHandler(
-        ({ push, pop }) => ({ push, pop }),
-        shallow
-    );
+    let push = useKeyHandler(({ push }) => push);
+    let pop = useKeyHandler(({ pop }) => pop);
     React.useEffect(() => {
-        keymapActions.push(def, transparent);
+        push(def, transparent);
         return () => {
-            keymapActions.pop(def);
+            pop(def);
         };
     }, deps);
 };

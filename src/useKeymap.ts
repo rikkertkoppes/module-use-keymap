@@ -1,6 +1,6 @@
 import React from "react";
-import create from "zustand";
-import shallow from "zustand/shallow";
+import { create } from "zustand";
+import { shallow } from "zustand/shallow";
 
 import { KeymapActions, KeymapState, Keymap } from "./types";
 

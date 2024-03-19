@@ -5,7 +5,8 @@ function isInputEvent(e: any) {
     if (
         e.target &&
         e.target.tagName &&
-        ["TEXTAREA", "INPUT"].includes(e.target.tagName) &&
+        (["TEXTAREA", "INPUT"].includes(e.target.tagName) ||
+            e.target.isContentEditable) &&
         !e.target.classList.contains("keyThrough")
     ) {
         if (

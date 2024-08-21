@@ -3,16 +3,17 @@
  */
 
 import React from "react";
-import { act, render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { useKeymap, KeyHandler } from "..";
+import { useKeymap, KeyProvider } from "..";
 
 function TestApp() {
     return (
         <div>
-            <KeyHandler />
-            <TestComponent />
+            <KeyProvider data-testid="keyprovider">
+                <TestComponent />
+            </KeyProvider>
         </div>
     );
 }
@@ -37,45 +38,45 @@ function TestComponent() {
     return <div data-testid="testcomponent">{count}</div>;
 }
 
-describe("useInner", () => {
+function fireKeys(keys: string) {
+    screen.getByTestId("keyprovider").focus();
+    userEvent.keyboard(keys);
+}
+
+describe("useKeymap", () => {
     test("sanity check for test component", () => {
-        let { getByTestId } = render(<TestComponent />);
+        let { getByTestId } = render(<TestApp />);
         let div = getByTestId("testcomponent");
         expect(div.textContent).toBe("0");
     });
     test("ArrowUp event on keydown", () => {
-        let { getByTestId, rerender } = render(<TestApp />);
-        rerender(<TestApp />);
+        let { getByTestId } = render(<TestApp />);
         let div = getByTestId("testcomponent");
-        userEvent.keyboard("[ArrowUp]");
+        fireKeys("[ArrowUp]");
         expect(div.textContent).toBe("1");
     });
     test("ArrowDown event on keyup", () => {
-        let { getByTestId, rerender } = render(<TestApp />);
-        rerender(<TestApp />);
+        let { getByTestId } = render(<TestApp />);
         let div = getByTestId("testcomponent");
-        userEvent.keyboard("[ArrowDown]");
+        fireKeys("[ArrowDown]");
         expect(div.textContent).toBe("-1");
     });
     test("KeyA event", () => {
-        let { getByTestId, rerender } = render(<TestApp />);
-        rerender(<TestApp />);
+        let { getByTestId } = render(<TestApp />);
         let div = getByTestId("testcomponent");
-        userEvent.keyboard("[KeyA]");
+        fireKeys("[KeyA]");
         expect(div.textContent).toBe("1");
     });
     test("Ctrl KeyA event", () => {
-        let { getByTestId, rerender } = render(<TestApp />);
-        rerender(<TestApp />);
+        let { getByTestId } = render(<TestApp />);
         let div = getByTestId("testcomponent");
-        userEvent.keyboard("[ControlLeft>][KeyA][/ControlLeft]");
+        fireKeys("[ControlLeft>][KeyA][/ControlLeft]");
         expect(div.textContent).toBe("-1");
     });
     test("Just the shift key", () => {
-        let { getByTestId, rerender } = render(<TestApp />);
-        rerender(<TestApp />);
+        let { getByTestId } = render(<TestApp />);
         let div = getByTestId("testcomponent");
-        userEvent.keyboard("[ShiftLeft]");
+        fireKeys("[ShiftLeft]");
         expect(div.textContent).toBe("-1");
     });
 });

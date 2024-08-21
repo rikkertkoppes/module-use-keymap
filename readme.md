@@ -9,18 +9,17 @@ npm install @rkmodules/use-keymap
 ```
 
 ```typescript
-import { useKeymap, KeyHandler } from "@rkmodules/use-keymap";
+import { useKeymap, KeyProvider } from "@rkmodules/use-keymap";
 ```
 
-include the KeyHandler component somewhere on your application, probably somewhere near the root. This component registers key event listeners globally (and removes them when it is unmounted)
+include the KeyProvider component somewhere on your application, probably somewhere near the root. This component registers key event listeners (and removes them when it is unmounted)
 
 ```tsx
 function App() {
     return (
-        <div>
-            <KeyHandler />
+        <KeyProvider>
             <MyComponent />
-        </div>
+        </KeyProvide>
     );
 }
 ```

@@ -28,9 +28,9 @@ const applyKeymap = (
 ) => {
     let key = e.code || e.key;
     if (e.spaceKey && key !== "Space") key = "Space_" + key;
-    if (e.shiftKey && key !== "Shift") key = "Shift_" + key;
-    if (e.altKey && key !== "Alt") key = "Alt_" + key;
-    if (e.ctrlKey && key !== "Ctrl") key = "Ctrl_" + key;
+    if (e.shiftKey && e.key !== "Shift") key = "Shift_" + key;
+    if (e.altKey && e.key !== "Alt") key = "Alt_" + key;
+    if (e.ctrlKey && e.key !== "Ctrl") key = "Ctrl_" + key;
     key += suffix;
     let handler = keymap[key];
     if (handler) {
@@ -44,6 +44,7 @@ const applyKeymap = (
 
 export const KeyHandler = () => {
     let { value } = useKeyHandler();
+    // collapse the keymap, if not transparent, only the last, otherwise, merge with previous on the stack
     let keymap = value.reduce((map, value) => {
         if (!value.options.transparent) return value.map;
         return { ...map, ...value.map };

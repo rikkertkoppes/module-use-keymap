@@ -11,14 +11,27 @@ function expandModifiers(map: Keymap) {
         newMap.ShiftLeft = map.Shift;
         newMap.ShiftRight = map.Shift;
     }
+    if (map.Shift_up) {
+        newMap.ShiftLeft_up = map.Shift_up;
+        newMap.ShiftRight_up = map.Shift_up;
+    }
     if (map.Ctrl) {
         newMap.CtrlLeft = map.Ctrl;
         newMap.CtrlRight = map.Ctrl;
+    }
+    if (map.Ctrl_up) {
+        newMap.CtrlLeft_up = map.Ctrl_up;
+        newMap.CtrlRight_up = map.Ctrl_up;
     }
     if (map.Alt) {
         newMap.AltLeft = map.Alt;
         newMap.AltRight = map.Alt;
         newMap.AltGraph = map.Alt;
+    }
+    if (map.Alt_up) {
+        newMap.AltLeft_up = map.Alt_up;
+        newMap.AltRight_up = map.Alt_up;
+        newMap.AltGraph_up = map.Alt_up;
     }
     return newMap;
 }

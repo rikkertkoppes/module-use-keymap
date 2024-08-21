@@ -14,16 +14,19 @@ export type Extended<E> = E & {
 };
 
 export type Keymap = Partial<Record<KeyCode, Handler>>;
+export type KeymapOptions = {
+    transparent?: boolean;
+};
 export type KeymapValue = {
     map: Keymap;
-    transparent: boolean;
+    options: KeymapOptions;
 };
 
 export type KeymapState = {
     value: KeymapValue[];
 };
 export type KeymapActions = {
-    push: (map: Keymap, transparent?: boolean) => void;
+    push: (map: Keymap, options: KeymapOptions) => void;
     pop: (map: Keymap) => void;
     set: (map: Keymap) => void;
 };

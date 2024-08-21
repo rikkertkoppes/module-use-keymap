@@ -45,7 +45,7 @@ const applyKeymap = (
 export const KeyHandler = () => {
     let { value } = useKeyHandler();
     let keymap = value.reduce((map, value) => {
-        if (!value.transparent) return value.map;
+        if (!value.options.transparent) return value.map;
         return { ...map, ...value.map };
     }, {});
 

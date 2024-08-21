@@ -44,7 +44,9 @@ function MyComponent() {
             Ctrl_KeyA: dec,
         },
         [],
-        false
+        {
+            transparent: false,
+        }
     );
     return <div>{count}</div>;
 }

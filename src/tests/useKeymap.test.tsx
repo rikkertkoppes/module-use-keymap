@@ -27,9 +27,10 @@ function TestComponent() {
     useKeymap(
         {
             ArrowUp: inc,
-            ArrowDown: dec,
+            ArrowDown_up: dec,
             KeyA: inc,
             Ctrl_KeyA: dec,
+            Shift: dec,
         },
         []
     );
@@ -42,14 +43,14 @@ describe("useInner", () => {
         let div = getByTestId("testcomponent");
         expect(div.textContent).toBe("0");
     });
-    test("ArrowUp event", () => {
+    test("ArrowUp event on keydown", () => {
         let { getByTestId, rerender } = render(<TestApp />);
         rerender(<TestApp />);
         let div = getByTestId("testcomponent");
         userEvent.keyboard("[ArrowUp]");
         expect(div.textContent).toBe("1");
     });
-    test("ArrowDown event", () => {
+    test("ArrowDown event on keyup", () => {
         let { getByTestId, rerender } = render(<TestApp />);
         rerender(<TestApp />);
         let div = getByTestId("testcomponent");
@@ -68,6 +69,13 @@ describe("useInner", () => {
         rerender(<TestApp />);
         let div = getByTestId("testcomponent");
         userEvent.keyboard("[ControlLeft>][KeyA][/ControlLeft]");
+        expect(div.textContent).toBe("-1");
+    });
+    test("Just the shift key", () => {
+        let { getByTestId, rerender } = render(<TestApp />);
+        rerender(<TestApp />);
+        let div = getByTestId("testcomponent");
+        userEvent.keyboard("[ShiftLeft]");
         expect(div.textContent).toBe("-1");
     });
 });

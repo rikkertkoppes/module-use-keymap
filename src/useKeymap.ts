@@ -5,6 +5,24 @@ import { KeymapActions, KeymapState, Keymap, KeymapOptions } from "./types";
 
 type Store = KeymapState & KeymapActions;
 
+function expandModifiers(map: Keymap) {
+    let newMap = { ...map };
+    if (map.Shift) {
+        newMap.ShiftLeft = map.Shift;
+        newMap.ShiftRight = map.Shift;
+    }
+    if (map.Ctrl) {
+        newMap.CtrlLeft = map.Ctrl;
+        newMap.CtrlRight = map.Ctrl;
+    }
+    if (map.Alt) {
+        newMap.AltLeft = map.Alt;
+        newMap.AltRight = map.Alt;
+        newMap.AltGraph = map.Alt;
+    }
+    return newMap;
+}
+
 export const useKeyHandler = create<Store>((set, get) => ({
     value: [],
     push: (map: Keymap, options: KeymapOptions) => {
@@ -21,10 +39,10 @@ export const useKeyHandler = create<Store>((set, get) => ({
             set({ value: value.slice(0, -1) });
         }
     },
-    set: (value: Keymap) => {
+    set: (map: Keymap) => {
         let val = get().value;
         if (val.length <= 1) {
-            set({ value: [{ map: value, options: { transparent: false } }] });
+            set({ value: [{ map, options: { transparent: false } }] });
         }
     },
 }));
@@ -40,10 +58,11 @@ export const useKeymap = (
 ) => {
     let push = useKeyHandler(({ push }) => push);
     let pop = useKeyHandler(({ pop }) => pop);
+    let expanded = React.useMemo(() => expandModifiers(def), [def]);
     React.useEffect(() => {
-        push(def, options);
+        push(expanded, options);
         return () => {
-            pop(def);
+            pop(expanded);
         };
     }, deps);
 };

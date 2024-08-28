@@ -61,11 +61,13 @@ function KeyCapture({ style, children, ...props }: KeyCaptureProps) {
     );
 }
 
-interface KeyProviderProps extends React.HTMLAttributes<HTMLDivElement> {}
-export function KeyProvider({ children, ...props }: KeyProviderProps) {
+interface KeyProviderProps extends React.HTMLAttributes<HTMLDivElement> {
+    debug?: boolean;
+}
+export function KeyProvider({ children, debug, ...props }: KeyProviderProps) {
     let storeRef = React.useRef<ReturnType<typeof createKeymapStore>>();
     if (!storeRef.current) {
-        storeRef.current = createKeymapStore();
+        storeRef.current = createKeymapStore(debug);
     }
     return (
         <KeymapContext.Provider value={storeRef.current}>

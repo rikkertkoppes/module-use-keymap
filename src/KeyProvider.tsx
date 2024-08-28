@@ -22,6 +22,7 @@ export function useKeyHandler<R>(selector: (state: Store) => R): R {
 interface KeyCaptureProps extends React.HTMLAttributes<HTMLDivElement> {}
 function KeyCapture({ style, children, ...props }: KeyCaptureProps) {
     let value = useKeyHandler((store) => store.value);
+    let debug = useKeyHandler((store) => store.debug);
     // collapse the keymap, if not transparent, only the last, otherwise, merge with previous on the stack
     let keymap = React.useMemo(
         () =>
@@ -32,11 +33,17 @@ function KeyCapture({ style, children, ...props }: KeyCaptureProps) {
         [value]
     );
     let handleDown = (e: React.KeyboardEvent) => {
+        if (debug) {
+            console.log("[use-keymap] handle key down", e.nativeEvent, keymap);
+        }
         if (!isInputEvent(e.nativeEvent)) {
             return applyKeymap(e.nativeEvent, keymap);
         }
     };
     let handleUp = (e: React.KeyboardEvent) => {
+        if (debug) {
+            console.log("[use-keymap] handle key up", e.nativeEvent, keymap);
+        }
         if (!isInputEvent(e.nativeEvent)) {
             return applyKeymap(e.nativeEvent, keymap, "_up");
         }

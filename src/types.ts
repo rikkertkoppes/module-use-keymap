@@ -24,6 +24,7 @@ export type KeymapValue = {
 
 export type KeymapState = {
     value: KeymapValue[];
+    debug: boolean;
 };
 export type KeymapActions = {
     push: (map: Keymap, options: KeymapOptions) => void;

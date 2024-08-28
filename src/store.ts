@@ -82,9 +82,10 @@ export const applyKeymap = (
     }
 };
 
-export const createKeymapStore = () => {
+export const createKeymapStore = (debug = false) => {
     return createStore<Store>()((set, get) => ({
         value: [],
+        debug,
         push: (map: Keymap, options: KeymapOptions) => {
             let value = get().value;
             if (map !== value[value.length - 1]?.map) {

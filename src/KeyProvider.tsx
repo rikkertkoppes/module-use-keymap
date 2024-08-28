@@ -26,7 +26,7 @@ function KeyCapture({ style, children, ...props }: KeyCaptureProps) {
     let keymap = React.useMemo(
         () =>
             value.reduce((map, value) => {
-                if (!value.options.transparent) return value.map;
+                if (!value.options?.transparent) return value.map;
                 return { ...map, ...value.map };
             }, {}),
         [value]

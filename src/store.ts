@@ -103,9 +103,12 @@ export const createKeymapStore = (options: StoreOptions = { debug: false }) => {
         },
         pop: (map: Keymap) => {
             let value = get().value;
-            if (map === value[value.length - 1]?.map) {
-                set({ value: value.slice(0, -1) });
-            }
+            let rev = [...value].reverse();
+            let index = rev.findIndex((v) => v.map === map);
+            index = value.length - 1 - index;
+            set({
+                value: [...value.slice(0, index), ...value.slice(index + 1)],
+            });
         },
         set: (map: Keymap) => {
             let val = get().value;

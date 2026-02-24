@@ -1,6 +1,6 @@
 {
     "name": "@rkmodules/use-keymap",
-    "version": "0.4.3",
+    "version": "0.5.1",
     "description": "",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -15,9 +15,9 @@
     "license": "ISC",
     "repository": {
         "type": "git",
-        "url": "https://github.com/rikkertkoppes/module-use-selection"
+        "url": "https://github.com/rikkertkoppes/module-use-keymap"
     },
-    "homepage": "https://github.com/rikkertkoppes/module-use-selection#readme",
+    "homepage": "https://github.com/rikkertkoppes/module-use-keymap#readme",
     "peerDependencies": {
         "react": ">=16.8.0"
     },

@@ -22,9 +22,14 @@ export type KeymapValue = {
     options: KeymapOptions;
 };
 
+export interface StoreOptions {
+    debug?: boolean;
+    preventDefault?: boolean;
+}
+
 export type KeymapState = {
     value: KeymapValue[];
-    debug: boolean;
+    options: StoreOptions;
 };
 export type KeymapActions = {
     push: (map: Keymap, options: KeymapOptions) => void;

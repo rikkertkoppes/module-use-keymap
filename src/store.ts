@@ -6,6 +6,7 @@ import {
     Keymap,
     KeymapOptions,
     Extended,
+    StoreOptions,
 } from "./types";
 
 export type Store = KeymapState & KeymapActions;
@@ -64,6 +65,7 @@ export function isInputEvent(e: any) {
 export const applyKeymap = (
     e: Extended<KeyboardEvent>,
     keymap: Keymap,
+    options: StoreOptions,
     suffix = ""
 ) => {
     let key = e.code || e.key;
@@ -74,18 +76,23 @@ export const applyKeymap = (
     key += suffix;
     let handler = keymap[key];
     if (handler) {
-        e.preventDefault();
+        if (options.preventDefault !== false) {
+            e.preventDefault();
+        }
         return handler(e as any);
     } else if (e.key.length === 1 && keymap.AnyCharacter) {
-        e.preventDefault();
+        // not preventing default for any character
+        if (options.preventDefault === true) {
+            e.preventDefault();
+        }
         return keymap.AnyCharacter(e as any);
     }
 };
 
-export const createKeymapStore = (debug = false) => {
+export const createKeymapStore = (options: StoreOptions = { debug: false }) => {
     return createStore<Store>()((set, get) => ({
         value: [],
-        debug,
+        options,
         push: (map: Keymap, options: KeymapOptions) => {
             let value = get().value;
             if (map !== value[value.length - 1]?.map) {
